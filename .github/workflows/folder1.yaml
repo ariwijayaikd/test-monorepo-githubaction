@@ -21,4 +21,7 @@ jobs:
         run: |
           cd folder1
           ls
+          echo "This is the content of text.txt file at folder1"
+          echo "=================================="
           cat text.txt
+          echo "=================================="
