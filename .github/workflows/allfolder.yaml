@@ -1,0 +1,109 @@
+name: Github Actions allfolder
+
+on:
+  push: 
+    branches:
+      - main
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      go_changed: ${{ steps.filter.outputs.go }}
+      node_changed: ${{ steps.filter.outputs.node }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            fol1:
+              - 'folder1/**'
+              - 'shared-lib/**'
+            fol2:
+              - 'folder2/**'
+              - 'shared-lib/**'
+            fol3:
+              - 'folder3/**'
+              - 'shared-lib/**'
+
+  folder1:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.fol1_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Display files and content in folder1
+        run: |
+          cd folder1
+          echo "This is the list of file at folder1"
+          echo "=================================="
+          ls -al
+          echo ""
+          echo "=================================="
+          echo "This is the content of text.txt file at folder1"
+          echo "=================================="
+          cat text.txt
+          echo ""
+          echo "=================================="
+
+      - name: Set commit SHA as output
+        id: vars_sha1
+        run: echo "sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Use commit SHA
+        run: echo "SHA from previous step: ${{ steps.vars_sha1.outputs.sha }}"
+
+  folder2:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.fol2_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Display files and content in folder2
+        run: |
+          cd folder2
+          echo "This is the content of file at folder2"
+          echo "=================================="
+          ls -al
+          echo ""
+          echo "=================================="
+          echo "This is the content of text.txt file at folder2"
+          echo "=================================="
+          cat text.txt
+          echo ""
+          echo "=================================="
+
+      - name: Set commit SHA as output
+        id: vars_sha2
+        run: echo "sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Use commit SHA
+        run: echo "SHA from previous step: ${{ steps.vars_sha2.outputs.sha }}"
+
+  folder3:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.fol3_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Display files and content in folder3
+        run: |
+          cd folder3
+          echo "This is the list of file at folder3"
+          echo "=================================="
+          ls -al
+          echo ""
+          echo "=================================="
+          echo "This is the content of text.txt file at folder3"
+          echo "=================================="
+          cat text.txt
+          echo ""
+          echo "=================================="
+
+      - name: Set commit SHA as output
+        id: vars_sha3
+        run: echo "sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Use commit SHA
+        run: echo "SHA from previous step: ${{ steps.vars_sha3.outputs.sha }}"
