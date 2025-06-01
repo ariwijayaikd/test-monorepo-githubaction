@@ -9,9 +9,9 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      fol1: ${{ steps.filter.outputs.fol1 }}
-      fol2: ${{ steps.filter.outputs.fol2 }}
-      fol3: ${{ steps.filter.outputs.fol3 }}
+      fol1: ${{ steps.filter.outputs.fol1_changed }}
+      fol2: ${{ steps.filter.outputs.fol2_changed }}
+      fol3: ${{ steps.filter.outputs.fol3_changed }}
     steps:
       - uses: actions/checkout@v3
       - id: filter
