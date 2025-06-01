@@ -1,0 +1,24 @@
+name: Github Actions folder1
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'folder1/**'
+      - 'shared-lib/**'
+  pull_request:
+    paths:
+      - 'fodler1/**'
+      - 'shared-lib/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cat text.txt file inside folder1
+        run: |
+          cd folder1
+          ls
+          cat text.txt
