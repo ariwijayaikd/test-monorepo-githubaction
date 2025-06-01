@@ -9,9 +9,9 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      fol1: ${{ steps.filter.outputs.fol1_changed }}
-      fol2: ${{ steps.filter.outputs.fol2_changed }}
-      fol3: ${{ steps.filter.outputs.fol3_changed }}
+      fol1: ${{ steps.filter.outputs.fol1 }}
+      fol2: ${{ steps.filter.outputs.fol2 }}
+      fol3: ${{ steps.filter.outputs.fol3 }}
     steps:
       - uses: actions/checkout@v3
       - id: filter
@@ -30,7 +30,7 @@ jobs:
 
   folder1:
     needs: detect-changes
-    if: needs.detect-changes.outputs.fol1_changed == 'true'
+    if: needs.detect-changes.outputs.fol1 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,7 +56,7 @@ jobs:
 
   folder2:
     needs: detect-changes
-    if: needs.detect-changes.outputs.fol2_changed == 'true'
+    if: needs.detect-changes.outputs.fol2 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -82,7 +82,7 @@ jobs:
 
   folder3:
     needs: detect-changes
-    if: needs.detect-changes.outputs.fol3_changed == 'true'
+    if: needs.detect-changes.outputs.fol3 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
