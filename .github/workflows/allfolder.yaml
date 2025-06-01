@@ -41,18 +41,17 @@ jobs:
           ls -al
           echo ""
           echo "=================================="
-          echo "This is the content of text.txt file at folder1"
-          echo "=================================="
           cat text.txt
-          echo ""
-          echo "=================================="
 
-      - name: Set commit SHA as output
-        id: vars_sha1
-        run: echo "sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
-
-      - name: Use commit SHA
-        run: echo "SHA from previous step: ${{ steps.vars_sha1.outputs.sha }}"
+      - name: Echo commit SHA
+        run: |
+          echo "Short SHA: $(git rev-parse --short $GITHUB_SHA)"
+          echo "Full SHA: $GITHUB_SHA"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Workflow: $GITHUB_WORKFLOW"
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Run Number: $GITHUB_RUN_NUMBER"
 
   folder2:
     needs: detect-changes
@@ -68,18 +67,17 @@ jobs:
           ls -al
           echo ""
           echo "=================================="
-          echo "This is the content of text.txt file at folder2"
-          echo "=================================="
           cat text.txt
-          echo ""
-          echo "=================================="
 
-      - name: Set commit SHA as output
-        id: vars_sha2
-        run: echo "sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
-
-      - name: Use commit SHA
-        run: echo "SHA from previous step: ${{ steps.vars_sha2.outputs.sha }}"
+      - name: Echo commit SHA
+        run: |
+          echo "Short SHA: $(git rev-parse --short $GITHUB_SHA)"
+          echo "Full SHA: $GITHUB_SHA"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Workflow: $GITHUB_WORKFLOW"
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Run Number: $GITHUB_RUN_NUMBER"
 
   folder3:
     needs: detect-changes
@@ -95,15 +93,14 @@ jobs:
           ls -al
           echo ""
           echo "=================================="
-          echo "This is the content of text.txt file at folder3"
-          echo "=================================="
           cat text.txt
-          echo ""
-          echo "=================================="
 
-      - name: Set commit SHA as output
-        id: vars_sha3
-        run: echo "sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
-
-      - name: Use commit SHA
-        run: echo "SHA from previous step: ${{ steps.vars_sha3.outputs.sha }}"
+      - name: Echo commit SHA
+        run: |
+          echo "Short SHA: $(git rev-parse --short $GITHUB_SHA)"
+          echo "Full SHA: $GITHUB_SHA"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Workflow: $GITHUB_WORKFLOW"
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Run Number: $GITHUB_RUN_NUMBER"
