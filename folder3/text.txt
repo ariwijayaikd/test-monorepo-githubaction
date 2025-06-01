@@ -6,6 +6,6 @@ Ini isi file txt didalam folder 3
 
 List of edit:
 
-1/6/25 => edit untuk test trigger
+1/6/25 => edit untuk test trigger.
 
 ==================================
