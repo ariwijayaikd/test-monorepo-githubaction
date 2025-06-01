@@ -3,3 +3,9 @@
 Ini file txt didalam folder 2
 
 ==================================
+
+List of edit:
+
+1/6/25 => edit untuk test trigger
+
+==================================
