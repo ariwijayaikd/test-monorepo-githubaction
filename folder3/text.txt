@@ -1,1 +1,1 @@
-Ini file txt didalam folder 3
+Ini isi file txt didalam folder 3

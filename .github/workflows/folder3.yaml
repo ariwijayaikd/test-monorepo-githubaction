@@ -24,4 +24,5 @@ jobs:
           echo "This is the content of text.txt file at folder3"
           echo "=================================="
           cat text.txt
+          echo ""
           echo "=================================="
