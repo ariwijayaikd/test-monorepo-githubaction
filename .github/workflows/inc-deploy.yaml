@@ -63,9 +63,7 @@ jobs:
           echo "Run Number: $GITHUB_RUN_NUMBER"
 
   build-fol1-nest2:
-    needs: [detect-changes , build-fol1-nest1]
-    if: | 
-      needs.detect-changes.outputs.nest2 == 'true'
+    needs: [build-fol1-nest1]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
