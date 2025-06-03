@@ -118,10 +118,19 @@ jobs:
           echo "Run Number: $GITHUB_RUN_NUMBER"
 
   deploy-dev:
-    # needs: detect-changes
-    # if: needs.detect-changes.outputs.cms-be == 'true'
-    needs: [build-fol1-nest2, build-fol1-nest2-only]
-    if: ${{(needs.build-fol1-nest2.result == 'success') || (needs.build-fol1-nest2-only.result == 'success')}}
+    needs: [build-fol1-nest2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Script to deploy to dev environment
+        run: |
+          echo "Deploying to dev environment..."
+          echo "This is a placeholder for the deployment script."
+          echo "You can add your deployment commands here."
+          echo "For example, you might use 'kubectl apply -f deployment.yaml' or similar commands."
+          echo "Deployment completed successfully!"
+
+  deploy-dev2:
+    needs: [build-fol1-nest2-only]
     runs-on: ubuntu-latest
     steps:
       - name: Script to deploy to dev environment
