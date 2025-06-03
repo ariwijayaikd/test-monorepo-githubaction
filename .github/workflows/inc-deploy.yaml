@@ -3,8 +3,7 @@ name: Github Actions allfolder
 on:
   push: 
     branches:
-      - none
-      # - main
+      - main
 
 jobs:
   detect-changes:
@@ -13,6 +12,8 @@ jobs:
       fol1: ${{ steps.filter.outputs.fol1 }}
       fol2: ${{ steps.filter.outputs.fol2 }}
       fol3: ${{ steps.filter.outputs.fol3 }}
+      nest1: ${{ steps.filter.outputs.nest1 }}
+      nest2: ${{ steps.filter.outputs.nest2 }}
     steps:
       - uses: actions/checkout@v3
       - id: filter
@@ -28,10 +29,16 @@ jobs:
             fol3:
               - 'folder3/**'
               - 'shared-lib/**'
+            nest1:
+              - 'folder1/nest1/**'
+              - 'shared-lib/**'
+            nest2:
+              - 'folder1/nest2/**'
+              - 'shared-lib/**'
 
-  folder1:
+  build-fol1-nest1:
     needs: detect-changes
-    if: needs.detect-changes.outputs.fol1 == 'true'
+    if: needs.detect-changes.outputs.nest1 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -55,9 +62,11 @@ jobs:
           echo "Run ID: $GITHUB_RUN_ID"
           echo "Run Number: $GITHUB_RUN_NUMBER"
 
-  folder2:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.fol2 == 'true'
+  build-fol1-nest2:
+    needs: [detect-changes , build-nest1]
+    if: |
+      needs.detect-changes.outputs.fol1 == 'true' && 
+      needs.detect-changes.outputs.fol2 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -81,9 +90,11 @@ jobs:
           echo "Run ID: $GITHUB_RUN_ID"
           echo "Run Number: $GITHUB_RUN_NUMBER"
 
-  folder3:
+  build-fol1-nest2-only:
     needs: detect-changes
-    if: needs.detect-changes.outputs.fol3 == 'true'
+    if: |
+      needs.detect-changes.outputs.nest2 == 'true' &&
+      needs.detect-changes.outputs.nest1 == 'false'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -106,3 +117,18 @@ jobs:
           echo "Workflow: $GITHUB_WORKFLOW"
           echo "Run ID: $GITHUB_RUN_ID"
           echo "Run Number: $GITHUB_RUN_NUMBER"
+
+  deploy-dev:
+    # needs: detect-changes
+    # if: needs.detect-changes.outputs.cms-be == 'true'
+    needs: [build-fol1-nest2, build-fol1-nest2-only]
+    if: ${{(needs.build-cms-be-n-fe.result == 'success') || (needs.build-cms-be-only.result == 'success')}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Script to deploy to dev environment
+        run: |
+          echo "Deploying to dev environment..."
+          echo "This is a placeholder for the deployment script."
+          echo "You can add your deployment commands here."
+          echo "For example, you might use 'kubectl apply -f deployment.yaml' or similar commands."
+          echo "Deployment completed successfully!"

@@ -3,7 +3,8 @@ name: Github Actions folder3
 on:
   push:
     branches:
-      - main
+      - none
+      # - main
     paths:
       - 'folder3/**'
       - 'shared-lib/**'

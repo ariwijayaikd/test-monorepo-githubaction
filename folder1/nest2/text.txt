@@ -1,0 +1,11 @@
+==================================
+
+Ini isi file txt didalam nest 2 dari folder 1
+
+==================================
+
+List of edit:
+
+1/6/25 => edit untuk test trigger
+
+==================================
