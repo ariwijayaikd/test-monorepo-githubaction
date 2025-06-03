@@ -121,7 +121,7 @@ jobs:
     # needs: detect-changes
     # if: needs.detect-changes.outputs.cms-be == 'true'
     needs: [build-fol1-nest2, build-fol1-nest2-only]
-    if: ${{(needs.build-cms-be-n-fe.result == 'success') || (needs.build-cms-be-only.result == 'success')}}
+    if: ${{(needs.build-fol1-nest2.result == 'success') || (needs.build-fol1-nest2-only.result == 'success')}}
     runs-on: ubuntu-latest
     steps:
       - name: Script to deploy to dev environment
