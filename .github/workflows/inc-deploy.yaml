@@ -1,4 +1,4 @@
-name: Github Actions allfolder
+name: Github Actions singlefile
 
 on:
   push: 
