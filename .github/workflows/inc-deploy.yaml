@@ -63,7 +63,7 @@ jobs:
           echo "Run Number: $GITHUB_RUN_NUMBER"
 
   build-fol1-nest2:
-    needs: [detect-changes , build-nest1]
+    needs: [detect-changes , build-fol1-nest1]
     if: |
       needs.detect-changes.outputs.fol1 == 'true' && 
       needs.detect-changes.outputs.fol2 == 'true'
