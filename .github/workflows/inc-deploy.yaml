@@ -64,9 +64,8 @@ jobs:
 
   build-fol1-nest2:
     needs: [detect-changes , build-fol1-nest1]
-    if: |
-      needs.detect-changes.outputs.fol1 == 'true' && 
-      needs.detect-changes.outputs.fol2 == 'true'
+    if: | 
+      needs.detect-changes.outputs.nest2 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
