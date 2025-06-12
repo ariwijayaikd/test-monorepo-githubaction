@@ -14,6 +14,7 @@ jobs:
       fol3: ${{ steps.filter.outputs.fol3 }}
       nest1: ${{ steps.filter.outputs.nest1 }}
       nest2: ${{ steps.filter.outputs.nest2 }}
+      file: ${{ steps.filter.outputs.file }}
     steps:
       - uses: actions/checkout@v3
       - id: filter
@@ -35,7 +36,36 @@ jobs:
             nest2:
               - 'folder1/nest2/**'
               - 'shared-lib/**'
+            file:
+              - 'depedency.txt'
+              - 'shared-lib/**'
 
+  build-depedency:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.file == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Display files and content in shared-lib
+        run: |
+          cd shared-lib
+          echo "This is the list of file at shared-lib"
+          echo "=================================="
+          ls -al
+          echo ""
+          echo "=================================="
+          cat depedency.txt
+
+      - name: Echo commit SHA
+        run: |
+          echo "Short SHA: $(git rev-parse --short $GITHUB_SHA)"
+          echo "Full SHA: $GITHUB_SHA"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Workflow: $GITHUB_WORKFLOW"
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Run Number: $GITHUB_RUN_NUMBER"
+          
   build-fol1-nest1:
     needs: detect-changes
     if: needs.detect-changes.outputs.nest1 == 'true'
