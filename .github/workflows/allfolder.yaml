@@ -13,6 +13,7 @@ jobs:
       fol1: ${{ steps.filter.outputs.fol1 }}
       fol2: ${{ steps.filter.outputs.fol2 }}
       fol3: ${{ steps.filter.outputs.fol3 }}
+      file1: ${{ steps.filter.outputs.file1 }}
     steps:
       - uses: actions/checkout@v3
       - id: filter
@@ -27,6 +28,9 @@ jobs:
               - 'shared-lib/**'
             fol3:
               - 'folder3/**'
+              - 'shared-lib/**'
+            file1:
+              - 'depedency.txt'
               - 'shared-lib/**'
 
   folder1:
@@ -96,6 +100,26 @@ jobs:
           echo ""
           echo "=================================="
           cat text.txt
+
+      - name: Echo commit SHA
+        run: |
+          echo "Short SHA: $(git rev-parse --short $GITHUB_SHA)"
+          echo "Full SHA: $GITHUB_SHA"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Workflow: $GITHUB_WORKFLOW"
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Run Number: $GITHUB_RUN_NUMBER"
+
+  file1:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.file1 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Display files and content in folder3
+        run: |
+          cat depedency.txt
 
       - name: Echo commit SHA
         run: |
